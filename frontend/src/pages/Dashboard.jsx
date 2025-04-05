@@ -1,6 +1,10 @@
 import { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../UserContext";
+import ProgressSection from "../components/ProgressSection";
+import Top3Section from "../components/Top3Section";
+import HistorySection from "../components/HistorySection";
+import CompetitionInfo from "../components/CompetitionInfo";
 
 export default function Dashboard() {
   const [userInfo, setUserInfo] = useState(null);
@@ -193,6 +197,10 @@ export default function Dashboard() {
           ))}
         </ul>
       </div>
+      <ProgressSection catches={catches} />
+      <Top3Section top3Abborre={top3Abborre} top3Gadda={top3Gadda} />
+      <HistorySection catches={catches} />
+      <CompetitionInfo />
 
       <button onClick={handleLogout}>Logga ut</button>
     </div>
