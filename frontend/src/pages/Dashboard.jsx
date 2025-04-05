@@ -1,10 +1,14 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import { UserContext } from "../UserContext";
 
 export default function Dashboard() {
   const [userInfo, setUserInfo] = useState(null);
   const [catches, setCatches] = useState([]);
   const [top3Abborre, setTop3Abborre] = useState([]);
   const [top3Gadda, setTop3Gadda] = useState([]);
+  const { setUser } = useContext(UserContext);
+  const navigate = useNavigate();
 
   // Hämta användarinformation vid laddning av sidan
   useEffect(() => {
@@ -14,8 +18,8 @@ export default function Dashboard() {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
+          credentials: "include",
         });
 
         if (response.ok) {
@@ -56,8 +60,8 @@ export default function Dashboard() {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
+          credentials: "include",
         });
 
         if (response.ok) {
@@ -85,10 +89,22 @@ export default function Dashboard() {
     fetchTop3();
   }, []);
 
-  const handleLogout = () => {
-    localStorage.removeItem("isLoggedIn");
-    localStorage.removeItem("token"); // Ta bort token från localStorage
-    window.location.href = "/login";
+  const handleLogout = async () => {
+    try {
+      const res = await fetch("/api/auth/logout", {
+        method: "POST",
+        credentials: "include", // viktigt för att skicka med cookies
+      });
+
+      if (res.ok) {
+        setUser(null); // töm användaren i context
+        navigate("/login"); // navigera till login
+      } else {
+        console.error("Logout misslyckades");
+      }
+    } catch (error) {
+      console.error("Fel vid logout:", error);
+    }
   };
 
   const handleCatchSubmit = async (e) => {
@@ -102,8 +118,8 @@ export default function Dashboard() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
+        credentials: "include",
         body: JSON.stringify({ fish, length }),
       });
 
