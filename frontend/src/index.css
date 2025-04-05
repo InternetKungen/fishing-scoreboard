@@ -1,3 +1,6 @@
+/* Importera Google Fonts */
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
+
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -13,56 +16,227 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
-
+/* Allmänna stilar för body */
 body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  font-family: "Roboto", sans-serif; /* Använd Roboto som typsnitt */
+  margin: 0; /* Ingen marginal runt body */
+  padding: 20px; /* Inre marginal */
+  background-color: #e9f5f0; /* Ljus bakgrundsfärg */
+  color: #333; /* Mörk textfärg */
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+/* Stilar för header */
+header {
+  background: linear-gradient(
+    135deg,
+    #4caf50,
+    #388e3c
+  ); /* Grön gradient för bakgrunden */
+  color: white; /* Vit textfärg */
+  padding: 20px; /* Inre marginal */
+  text-align: center; /* Centrera texten */
+  border-radius: 10px; /* Rundade hörn */
+  margin-bottom: 20px; /* Marginal under header */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Skugga för djup */
 }
 
+/* Stilar för huvudbehållaren */
+.main-container {
+  max-width: 1200px; /* Maximal bredd för huvudbehållaren */
+  margin: 0 auto; /* Centrera behållaren */
+}
+
+/* Stilar för formulärbehållaren */
+.form-container {
+  background: #ffffff; /* Vit bakgrund */
+  padding: 20px; /* Inre marginal */
+  border-radius: 10px; /* Rundade hörn */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Skugga för djup */
+  margin-bottom: 20px; /* Marginal under formulärbehållaren */
+}
+
+/* Stilar för formulär */
+form {
+  display: flex; /* Flexbox för att arrangera element */
+  gap: 10px; /* Avstånd mellan element */
+  flex-wrap: wrap; /* Tillåt radbrytning */
+}
+
+/* Stilar för select, input och button */
+select,
+input,
 button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  padding: 10px; /* Inre marginal */
+  border: 1px solid #ddd; /* Ljus grå kant */
+  border-radius: 5px; /* Rundade hörn */
+  font-size: 16px; /* Typsnittsstorlek */
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+/* Stilar för knappar */
+button {
+  background-color: #388e3c; /* Grön bakgrundsfärg */
+  color: white; /* Vit textfärg */
+  border: none; /* Ingen kant */
+  cursor: pointer; /* Handpekare vid hover */
+  transition: background-color 0.3s, transform 0.2s; /* Mjuk övergång för bakgrundsfärg och transform */
+}
+
+/* Hover-effekt för knappar */
+button:hover {
+  background-color: #2e7d32; /* Mörkare grön vid hover */
+  transform: scale(1.05); /* Liten förstoring vid hover */
+}
+
+/* Stilar för framstegsmätare */
+.progress-container {
+  background: white; /* Vit bakgrund */
+  padding: 20px; /* Inre marginal */
+  border-radius: 10px; /* Rundade hörn */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Skugga för djup */
+  margin-bottom: 20px; /* Marginal under framstegsmätare */
+}
+
+/* Stilar för framstegsmätarens behållare */
+.progress-box {
+  margin-bottom: 20px; /* Marginal under varje framstegsmätare */
+  padding: 10px; /* Inre marginal för att ge utrymme runt mätarna */
+  border: 1px solid #ffffff; /* Ljus grå kant */
+  border-radius: 10px; /* Rundade hörn */
+  background-color: #f9f9f9; /* Ljus bakgrund för att skilja den från resten */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Lätt skugga för djup */
+}
+
+/* Stilar för framstegsmätarens container */
+.progress-bar-container {
+  background-color: #ffffff; /* Ljusgrå bakgrund */
+  border-radius: 10px; /* Rundade hörn */
+  height: auto; /* Låt höjden anpassas efter innehållet */
+  margin: 10px 0; /* Marginal ovan och under */
+  display: flex; /* Använd flexbox */
+  flex-direction: column; /* Stapla mätarna vertikalt */
+  padding: 5px; /* Inre marginal för att ge utrymme runt mätarna */
+  border: 1px solid #eeeeee; /* Ljus grå kant */
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* Lätt skugga för djup */
+  width: auto;
+}
+
+/* Stilar för framstegsmätaren */
+.progress-bar {
+  width: 100%; /* Full bredd av container */
+  height: 20px; /* Höjd på mätaren */
+  background: linear-gradient(90deg, #4caf50, #003903); /* Grön gradient */
+  transition: width 0.3s ease; /* Mjuk övergång för bredd */
+  margin-bottom: 5px; /* Avstånd mellan mätarna */
+  border-radius: 10px; /* Rundade hörn */
+}
+
+/* Stilar för historiksektionen */
+.history-container {
+  background: white; /* Vit bakgrund */
+  padding: 20px; /* Inre marginal */
+  border-radius: 10px; /* Rundade hörn */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Skugga för djup */
+}
+
+/* Stilar för fångsthistorik */
+#catchHistory {
+  display: grid; /* Använd grid-layout */
+  grid-template-columns: repeat(3, 1fr); /* Tre kolumner */
+  gap: 20px; /* Avstånd mellan kolumner */
+}
+
+/* Stilar för varje fångstpost */
+.catch-item {
+  background: #c8e6c9; /* Ljusgrön bakgrund */
+  padding: 15px; /* Inre marginal */
+  border-radius: 5px; /* Rundade hörn */
+  display: flex; /* Flexbox för arrangemang */
+  justify-content: space-between; /* Utrymme mellan element */
+  align-items: center; /* Centrera vertikalt */
+}
+
+/* Stilar för ta bort-knappen */
+.delete-btn {
+  background-color: #ff5722; /* Orange bakgrund */
+  color: white; /* Vit textfärg */
+  border: none; /* Ingen kant */
+  padding: 5px 10px; /* Inre marginal */
+  border-radius: 5px; /* Rundade hörn */
+  cursor: pointer; /* Handpekare vid hover */
+  transition: background-color 0.3s; /* Mjuk övergång för bakgrundsfärg */
+}
+
+/* Hover-effekt för ta bort-knappen */
+.delete-btn:hover {
+  background-color: #cc0000; /* Mörkare röd vid hover */
+}
+
+/* Stilar för rubriker */
+h2 {
+  margin-top: 0; /* Ingen övre marginal */
+  color: #333; /* Mörk textfärg */
+  border-bottom: 2px solid #388e3c; /* Grön understrykning */
+  padding-bottom: 10px; /* Inre marginal under rubriken */
+}
+
+h3 {
+  margin: 0; /* Ingen marginal */
+  color: #333; /* Mörk textfärg */
+  border-bottom: 2px solid #f0f0f0; /* Ljusgrå understrykning */
+}
+
+/* Stilar för topplistor */
+.top3-container {
+  display: flex; /* Flexbox för arrangemang */
+  gap: 20px; /* Avstånd mellan topplistor */
+  margin-bottom: 20px; /* Marginal under topplistor */
+}
+
+/* Stilar för varje topplista */
+.top3-box {
+  flex: 1; /* Låt varje box ta lika mycket plats */
+  background: white; /* Vit bakgrund */
+  padding: 20px; /* Inre marginal */
+  border-radius: 10px; /* Rundade hörn */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Skugga för djup */
+}
+
+/* Stilar för topplistor */
+.top3-list {
+  list-style: none; /* Ingen punktlista */
+  padding: 0; /* Ingen inre marginal */
+}
+
+/* Stilar för varje listobjekt i topplistor */
+.top3-list li {
+  padding: 10px; /* Inre marginal */
+  margin: 5px 0; /* Marginal ovan och under */
+  border-radius: 5px; /* Rundade hörn */
+  border-bottom: none; /* Ingen kant under */
+}
+
+/* Specifika färger för topplistor */
+.top3-list li:nth-child(1) {
+  background-color: #4caf50; /* Grön för första plats */
+}
+
+.top3-list li:nth-child(2) {
+  background-color: #8bc34a; /* Ljusgrön för andra plats */
+}
+
+.top3-list li:nth-child(3) {
+  background-color: #cddc39; /* Gulgrön för tredje plats */
+}
+
+/* Stilar för texten under framstegsmätarna */
+#progressTextMarkusAbborre,
+#progressTextMarkusGadda,
+#progressTextMaxAbborre,
+#progressTextMaxGadda,
+#progressTextLasseAbborre,
+#progressTextLasseGadda {
+  margin-top: 5px; /* Marginal ovanför texten */
+  font-size: 16px; /* Typsnittsstorlek */
+  color: #333; /* Mörk textfärg */
+  font-weight: bold; /* Fet stil för att göra texten mer framträdande */
 }

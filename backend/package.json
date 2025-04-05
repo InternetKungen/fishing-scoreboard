@@ -1,5 +1,5 @@
 {
-  "name": "coffee-shop-backend",
+  "name": "fishing-scoreboard-backend",
   "version": "1.0.0",
   "description": "A site to list and comment on audio files",
   "main": "index.js",
