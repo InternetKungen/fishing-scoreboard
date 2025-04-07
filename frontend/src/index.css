@@ -8,7 +8,11 @@
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.87),
+    rgba(255, 255, 255, 0.87)
+  );
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -243,4 +247,22 @@ h3 {
 
 .catch-form {
   margin-top: 10px; /* Marginal ovanför formuläret */
+}
+
+.logo {
+  width: 90px; /* Bredd på logotypen */
+  height: auto; /* Automatisk höjd */
+}
+
+.login-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.login-links {
+  display: flex;
+  gap: 10px; /* Avstånd mellan länkar */
+  justify-content: flex-start;
 }

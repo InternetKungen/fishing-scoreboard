@@ -1,9 +1,10 @@
 import { useState, useContext, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { UserContext } from "../UserContext";
 import ProgressSection from "../components/ProgressSection";
 import Top3Section from "../components/Top3Section";
 import HistorySection from "../components/HistorySection";
+import Logo from "../assets/img/fishing-logo.png";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -111,8 +112,9 @@ export default function Login() {
   return (
     <>
       <header className="login-header">
+        <img src={Logo} alt="Logo" className="logo" />
+        <h1>Fisketävling 2025</h1>
         <div className="login-container">
-          <h1>Logga in till Fisketävling 2025</h1>
           <form onSubmit={handleSubmit}>
             <input
               type="email"
@@ -131,6 +133,10 @@ export default function Login() {
             <button type="submit">Logga in</button>
             {error && <p style={{ color: "red" }}>{error}</p>}
           </form>
+          <div className="login-links">
+            <Link to="/register">Registrera dig</Link>
+            <Link to="/reset-password">Glömt lösenord?</Link>
+          </div>
         </div>
       </header>
       <main className="login-page">
