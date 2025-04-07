@@ -240,3 +240,7 @@ h3 {
   color: #333; /* Mörk textfärg */
   font-weight: bold; /* Fet stil för att göra texten mer framträdande */
 }
+
+.catch-form {
+  margin-top: 10px; /* Marginal ovanför formuläret */
+}

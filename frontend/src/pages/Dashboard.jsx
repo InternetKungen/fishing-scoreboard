@@ -5,6 +5,7 @@ import ProgressSection from "../components/ProgressSection";
 import Top3Section from "../components/Top3Section";
 import HistorySection from "../components/HistorySection";
 import CompetitionInfo from "../components/CompetitionInfo";
+import MyCatchList from "../components/MyCatchList";
 
 export default function Dashboard() {
   const [userInfo, setUserInfo] = useState(null);
@@ -28,7 +29,7 @@ export default function Dashboard() {
 
         if (response.ok) {
           const data = await response.json();
-          setUserInfo(data);
+          setUserInfo(data.user);
         } else {
           console.error("Misslyckades med att hämta användardata");
         }
@@ -138,40 +139,33 @@ export default function Dashboard() {
     }
   };
 
+  const handleDeleteCatch = async (id) => {
+    try {
+      const response = await fetch(`/api/catches/${id}`, {
+        method: "DELETE",
+        credentials: "include",
+      });
+
+      if (response.ok) {
+        setCatches((prev) => prev.filter((c) => c._id !== id));
+      } else {
+        console.error("Misslyckades med att ta bort fångst");
+      }
+    } catch (error) {
+      console.error("Fel vid borttagning av fångst:", error);
+    }
+  };
+
   return (
     <div className="dashboard-page">
       <h2>Välkommen till Fisketävlingen, {userInfo?.firstName}!</h2>
       <p>
         Här är din dashboard med information om tävlingen och dina resultat.
       </p>
-
-      <div className="competition-container">
-        <h3>Top 3 Fångster</h3>
-        <div>
-          <h4>Top 3 Största Abborre</h4>
-          <ul>
-            {top3Abborre.map((catchItem, index) => (
-              <li key={index}>
-                {catchItem.fisherman}: {catchItem.length} cm
-              </li>
-            ))}
-          </ul>
-        </div>
-        <div>
-          <h4>Top 3 Största Gädda</h4>
-          <ul>
-            {top3Gadda.map((catchItem, index) => (
-              <li key={index}>
-                {catchItem.fisherman}: {catchItem.length} cm
-              </li>
-            ))}
-          </ul>
-        </div>
-      </div>
-
-      <div className="catch-form-container">
+      <p>Din registrerade e-post: {userInfo?.email}</p>
+      <div className="form-container">
         <h3>Registrera Fångst</h3>
-        <form onSubmit={handleCatchSubmit}>
+        <form onSubmit={handleCatchSubmit} className="catch-form">
           <select name="fish" required>
             <option value="">Välj Fisk</option>
             <option value="Abborre">Abborre</option>
@@ -186,17 +180,10 @@ export default function Dashboard() {
           <button type="submit">Registrera Fångst</button>
         </form>
       </div>
-
-      <div className="catch-history-container">
-        <h3>Din Fångsthistorik</h3>
-        <ul>
-          {catches.map((catchItem, index) => (
-            <li key={index}>
-              {catchItem.fish}: {catchItem.length} cm
-            </li>
-          ))}
-        </ul>
+      <div className="my-catches-section">
+        <MyCatchList catches={catches} onDelete={handleDeleteCatch} />
       </div>
+
       <ProgressSection catches={catches} />
       <Top3Section top3Abborre={top3Abborre} top3Gadda={top3Gadda} />
       <HistorySection catches={catches} />

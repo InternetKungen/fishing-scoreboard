@@ -1,6 +1,9 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../UserContext";
+import ProgressSection from "../components/ProgressSection";
+import Top3Section from "../components/Top3Section";
+import HistorySection from "../components/HistorySection";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -8,6 +11,64 @@ export default function Login() {
   const [error, setError] = useState("");
   const navigate = useNavigate();
   const { setUser } = useContext(UserContext); // 👈 lägg till
+  const [catches, setCatches] = useState([]);
+  const [top3Abborre, setTop3Abborre] = useState([]);
+  const [top3Gadda, setTop3Gadda] = useState([]);
+
+  useEffect(() => {
+    const fetchCatches = async () => {
+      try {
+        const response = await fetch("/api/catches", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          setCatches(data);
+        } else {
+          console.error("Misslyckades med att hämta fångster");
+        }
+      } catch (error) {
+        console.error("Fel vid hämtning av fångster:", error);
+      }
+    };
+    const fetchTop3 = async () => {
+      try {
+        const response = await fetch("/api/catches", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          const top3Abborre = data
+            .filter((catchItem) => catchItem.fish === "Abborre")
+            .sort((a, b) => b.length - a.length)
+            .slice(0, 3);
+          const top3Gadda = data
+            .filter((catchItem) => catchItem.fish === "Gädda")
+            .sort((a, b) => b.length - a.length)
+            .slice(0, 3);
+          setTop3Abborre(top3Abborre);
+          setTop3Gadda(top3Gadda);
+        } else {
+          console.error("Misslyckades med att hämta topp 3 fångster");
+        }
+      } catch (error) {
+        console.error("Fel vid hämtning av topp 3 fångster:", error);
+      }
+    };
+
+    fetchCatches();
+    fetchTop3();
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -48,26 +109,37 @@ export default function Login() {
   };
 
   return (
-    <div className="login-container">
-      <h1>Logga in till Fisketävling 2025</h1>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="email"
-          placeholder="E-post"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
-        <input
-          type="password"
-          placeholder="Lösenord"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-        <button type="submit">Logga in</button>
-        {error && <p style={{ color: "red" }}>{error}</p>}
-      </form>
-    </div>
+    <>
+      <header className="login-header">
+        <div className="login-container">
+          <h1>Logga in till Fisketävling 2025</h1>
+          <form onSubmit={handleSubmit}>
+            <input
+              type="email"
+              placeholder="E-post"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+            <input
+              type="password"
+              placeholder="Lösenord"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+            <button type="submit">Logga in</button>
+            {error && <p style={{ color: "red" }}>{error}</p>}
+          </form>
+        </div>
+      </header>
+      <main className="login-page">
+        <div className="public-stats">
+          <ProgressSection catches={catches} />
+          <Top3Section top3Abborre={top3Abborre} top3Gadda={top3Gadda} />
+          <HistorySection catches={catches} />
+        </div>
+      </main>
+    </>
   );
 }

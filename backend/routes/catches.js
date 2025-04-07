@@ -11,7 +11,7 @@ import {
 const catchesRouter = express.Router();
 
 // Get alla fångster (för progress/top 3/historik)
-catchesRouter.get("/", authUser, getAllCatches);
+catchesRouter.get("/", getAllCatches);
 
 // Mina fångster (kräver inloggning)
 catchesRouter.get("/me", authUser, getMyCatches);
