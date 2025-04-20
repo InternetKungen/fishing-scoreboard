@@ -13,7 +13,7 @@ export default function ProgressSection({ catches }) {
 
   return (
     <div className="progress-container">
-      <h2>Framsteg</h2>
+      <h2>Sammanställning av Fångster</h2>
       {Object.entries(totals).map(([name, fishData]) => (
         <div className="progress-box" key={name}>
           <h3>{name}</h3>

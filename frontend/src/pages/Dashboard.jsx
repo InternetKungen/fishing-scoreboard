@@ -6,9 +6,11 @@ import Top3Section from "../components/Top3Section";
 import HistorySection from "../components/HistorySection";
 import CompetitionInfo from "../components/CompetitionInfo";
 import MyCatchList from "../components/MyCatchList";
+import Logo from "../assets/img/fishing-logo.png";
 
 export default function Dashboard() {
   const [userInfo, setUserInfo] = useState(null);
+  const [myCatches, setMyCatches] = useState([]);
   const [catches, setCatches] = useState([]);
   const [top3Abborre, setTop3Abborre] = useState([]);
   const [top3Gadda, setTop3Gadda] = useState([]);
@@ -40,7 +42,7 @@ export default function Dashboard() {
 
     const fetchCatches = async () => {
       try {
-        const response = await fetch("/api/catches/me", {
+        const response = await fetch("/api/catches/", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -51,6 +53,27 @@ export default function Dashboard() {
         if (response.ok) {
           const data = await response.json();
           setCatches(data);
+        } else {
+          console.error("Misslyckades med att hämta fångster");
+        }
+      } catch (error) {
+        console.error("Fel vid hämtning av fångster:", error);
+      }
+    };
+
+    const fetchMyCatches = async () => {
+      try {
+        const response = await fetch("/api/catches/me", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          setMyCatches(data);
         } else {
           console.error("Misslyckades med att hämta fångster");
         }
@@ -91,6 +114,7 @@ export default function Dashboard() {
 
     fetchUserInfo();
     fetchCatches();
+    fetchMyCatches();
     fetchTop3();
   }, []);
 
@@ -131,6 +155,7 @@ export default function Dashboard() {
       if (response.ok) {
         const newCatch = await response.json();
         setCatches([...catches, newCatch]);
+        setMyCatches([...myCatches, newCatch]);
       } else {
         console.error("Misslyckades med att registrera fångst");
       }
@@ -148,6 +173,7 @@ export default function Dashboard() {
 
       if (response.ok) {
         setCatches((prev) => prev.filter((c) => c._id !== id));
+        setMyCatches((prev) => prev.filter((c) => c._id !== id));
       } else {
         console.error("Misslyckades med att ta bort fångst");
       }
@@ -158,38 +184,50 @@ export default function Dashboard() {
 
   return (
     <div className="dashboard-page">
-      <h2>Välkommen till Fisketävlingen, {userInfo?.firstName}!</h2>
-      <p>
-        Här är din dashboard med information om tävlingen och dina resultat.
-      </p>
-      <p>Din registrerade e-post: {userInfo?.email}</p>
-      <div className="form-container">
-        <h3>Registrera Fångst</h3>
-        <form onSubmit={handleCatchSubmit} className="catch-form">
-          <select name="fish" required>
-            <option value="">Välj Fisk</option>
-            <option value="Abborre">Abborre</option>
-            <option value="Gädda">Gädda</option>
-          </select>
-          <input
-            type="number"
-            name="length"
-            placeholder="Längd i cm"
-            required
-          />
-          <button type="submit">Registrera Fångst</button>
-        </form>
-      </div>
-      <div className="my-catches-section">
-        <MyCatchList catches={catches} onDelete={handleDeleteCatch} />
-      </div>
+      <header className="login-header">
+        <img src={Logo} alt="Logo" className="logo" />
+        <h1>Fisketävling 2025</h1>
+        <div className="login-container">
+          <button onClick={handleLogout} className="logout-button">
+            Logga ut
+          </button>
+        </div>
+      </header>
 
-      <ProgressSection catches={catches} />
-      <Top3Section top3Abborre={top3Abborre} top3Gadda={top3Gadda} />
-      <HistorySection catches={catches} />
-      <CompetitionInfo />
+      <main>
+        <div className="user-info-section">
+          <h2>Välkommen till Fisketävlingen, {userInfo?.firstName}!</h2>
+          {/* <p>
+            Här är din dashboard med information om tävlingen och dina resultat.
+          </p> */}
+          <p>Din registrerade e-post: {userInfo?.email}</p>
+        </div>
+        <div className="form-container">
+          <h3>Registrera Fångst</h3>
+          <form onSubmit={handleCatchSubmit} className="catch-form">
+            <select name="fish" required>
+              <option value="">Välj Fisk</option>
+              <option value="Abborre">Abborre</option>
+              <option value="Gädda">Gädda</option>
+            </select>
+            <input
+              type="number"
+              name="length"
+              placeholder="Längd i cm"
+              required
+            />
+            <button type="submit">Registrera Fångst</button>
+          </form>
+        </div>
+        <div className="my-catches-section">
+          <MyCatchList catches={myCatches} onDelete={handleDeleteCatch} />
+        </div>
 
-      <button onClick={handleLogout}>Logga ut</button>
+        <ProgressSection catches={catches} />
+        <Top3Section top3Abborre={top3Abborre} top3Gadda={top3Gadda} />
+        <HistorySection catches={catches} />
+        <CompetitionInfo />
+      </main>
     </div>
   );
 }
