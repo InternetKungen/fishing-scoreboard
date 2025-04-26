@@ -51,7 +51,7 @@ export const getMyCatches = async (req, res) => {
 
 // Sätter användarens förnamn som "fiskare" i fångstmodellen
 export const addCatch = async (req, res) => {
-  const { fish, length } = req.body;
+  const { fish, length, image } = req.body;
 
   if (!fish || !length) {
     return res.status(400).json({ message: "Fyll i alla fält" });
@@ -63,6 +63,7 @@ export const addCatch = async (req, res) => {
       fisherman: req.user.firstName,
       fish,
       length,
+      image: image || null,
       date: new Date().toLocaleDateString("sv-SE"),
     });
 

@@ -138,29 +138,59 @@ export default function Dashboard() {
 
   const handleCatchSubmit = async (e) => {
     e.preventDefault();
+    const form = e.target;
+    const fish = form.fish.value;
+    const length = parseInt(form.length.value);
+    const imageFile = form.imageFile.files[0];
 
-    const fish = e.target.fish.value;
-    const length = parseInt(e.target.length.value);
+    let imageFilename = null;
+
+    if (imageFile) {
+      const uploadData = new FormData();
+      uploadData.append("imageFile", imageFile);
+
+      try {
+        const uploadRes = await fetch("/api/upload/image", {
+          method: "POST",
+          body: uploadData,
+          credentials: "include",
+        });
+
+        if (uploadRes.ok) {
+          const result = await uploadRes.json();
+          imageFilename = result.filename;
+        } else {
+          console.error("Misslyckades med att ladda upp bild");
+        }
+      } catch (err) {
+        console.error("Fel vid bilduppladdning:", err);
+      }
+    }
 
     try {
-      const response = await fetch("/api/catches", {
+      const catchRes = await fetch("/api/catches", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         credentials: "include",
-        body: JSON.stringify({ fish, length }),
+        body: JSON.stringify({
+          fish,
+          length,
+          image: imageFilename,
+        }),
       });
 
-      if (response.ok) {
-        const newCatch = await response.json();
-        setCatches([...catches, newCatch]);
-        setMyCatches([...myCatches, newCatch]);
+      if (catchRes.ok) {
+        const newCatch = await catchRes.json();
+        setCatches((prev) => [...prev, newCatch]);
+        setMyCatches((prev) => [...prev, newCatch]);
+        form.reset();
       } else {
         console.error("Misslyckades med att registrera fångst");
       }
-    } catch (error) {
-      console.error("Fel vid registrering av fångst:", error);
+    } catch (err) {
+      console.error("Fel vid registrering:", err);
     }
   };
 
@@ -216,6 +246,9 @@ export default function Dashboard() {
               placeholder="Längd i cm"
               required
             />
+
+            <input type="file" name="imageFile" accept="image/*" />
+
             <button type="submit">Registrera Fångst</button>
           </form>
         </div>

@@ -24,6 +24,10 @@ const catchSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  image: {
+    type: String,
+    required: false,
+  },
 });
 
 export default mongoose.model("Catch", catchSchema);
