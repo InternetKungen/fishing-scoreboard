@@ -2,7 +2,7 @@ export default function HistorySection({ catches }) {
   return (
     <div className="history-container">
       <h2>Historik</h2>
-      <ul>
+      <ul className="history-list">
         {catches.map((item, index) => (
           <li key={index}>
             {item.date?.slice(0, 10) || "okänt datum"} – {item.fish} –{" "}
