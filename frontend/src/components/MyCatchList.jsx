@@ -1,13 +1,15 @@
 import { useState } from "react";
+import Modal from "./Modal";
 
 export default function MyCatchList({ catches, onDelete }) {
-  const [visibleImages, setVisibleImages] = useState({});
+  const [selectedImage, setSelectedImage] = useState(null);
 
-  const toggleImage = (id) => {
-    setVisibleImages((prev) => ({
-      ...prev,
-      [id]: !prev[id],
-    }));
+  const openImageModal = (image) => {
+    setSelectedImage(image);
+  };
+
+  const closeModal = () => {
+    setSelectedImage(null);
   };
 
   return (
@@ -24,20 +26,15 @@ export default function MyCatchList({ catches, onDelete }) {
                   {catchItem.date} - {catchItem.fish} ({catchItem.length} cm)
                   {catchItem.image ? (
                     <>
-                      <button onClick={() => toggleImage(catchItem._id)}>
-                        {visibleImages[catchItem._id]
-                          ? "Dölj bild"
-                          : "Visa bild"}
+                      <button
+                        onClick={() =>
+                          openImageModal(
+                            `/public/uploads/images/${catchItem.image}`
+                          )
+                        }
+                      >
+                        Visa bild
                       </button>
-                      {visibleImages[catchItem._id] && (
-                        <div>
-                          <img
-                            src={`/public/uploads/images/${catchItem.image}`}
-                            alt="Fångstbild"
-                            style={{ maxWidth: "300px", marginTop: "0.5rem" }}
-                          />
-                        </div>
-                      )}
                     </>
                   ) : (
                     <button>Lägg till bild</button>
@@ -55,6 +52,8 @@ export default function MyCatchList({ catches, onDelete }) {
           </ul>
         )}
       </div>
+
+      {selectedImage && <Modal imageSrc={selectedImage} onClose={closeModal} />}
     </div>
   );
 }

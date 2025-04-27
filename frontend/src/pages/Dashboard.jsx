@@ -232,6 +232,7 @@ export default function Dashboard() {
           </p> */}
           <p>Din registrerade e-post: {userInfo?.email}</p>
         </div>
+        <CompetitionInfo />
         <div className="form-container">
           <h3>Registrera Fångst</h3>
           <form onSubmit={handleCatchSubmit} className="catch-form">
@@ -259,7 +260,6 @@ export default function Dashboard() {
         <ProgressSection catches={catches} />
         <Top3Section top3Abborre={top3Abborre} top3Gadda={top3Gadda} />
         <HistorySection catches={catches} />
-        <CompetitionInfo />
       </main>
     </div>
   );
