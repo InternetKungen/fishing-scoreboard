@@ -215,6 +215,27 @@ button:active {
   );
 }
 
+.history-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  position: relative;
+
+  button {
+    position: absolute;
+    right: 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+    outline: none;
+
+    img {
+      width: 24px;
+      height: 24px;
+    }
+  }
+}
+
 .catch-item {
   background: #c8e6c9;
   padding: 15px;
@@ -308,7 +329,28 @@ h3::after {
   margin: 5px 0;
   border-radius: 20px;
   border-bottom: none;
+  position: relative;
+  display: flex;
+  align-items: center;
+  button {
+    position: absolute;
+    right: 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+    outline: none;
+
+    img {
+      width: 24px;
+      height: 24px;
+    }
+  }
 }
+
+/* .top3-box ul li:first-child button img {
+  width: 30px;
+  height: 30px;
+} */
 
 .top3-box ul li:nth-child(1) {
   background: linear-gradient(
