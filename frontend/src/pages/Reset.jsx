@@ -31,7 +31,7 @@ function ResetPasswordPage() {
   };
 
   return (
-    <div>
+    <div className="reset-password-container">
       <h2>Återställ lösenord</h2>
       <form onSubmit={handleSubmit}>
         <input

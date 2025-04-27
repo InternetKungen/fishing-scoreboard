@@ -38,7 +38,7 @@ function RegisterPage() {
   };
 
   return (
-    <div>
+    <div className="register-container">
       <h2>Registrera användare</h2>
       <form onSubmit={handleSubmit}>
         <input
