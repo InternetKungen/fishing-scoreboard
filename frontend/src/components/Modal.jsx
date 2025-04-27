@@ -2,19 +2,7 @@ export default function Modal({ imageSrc, onClose }) {
   return (
     <div style={modalOverlayStyle} onClick={onClose}>
       <div style={modalContentStyle} onClick={(e) => e.stopPropagation()}>
-        <button
-          onClick={onClose}
-          style={{
-            position: "absolute",
-            top: "10px",
-            right: "10px",
-            background: "transparent",
-            border: "none",
-            fontSize: "24px",
-            cursor: "pointer",
-            color: "white",
-          }}
-        >
+        <button onClick={onClose} style={closeButtonStyle}>
           ✖
         </button>
         <img
@@ -48,4 +36,15 @@ const modalContentStyle = {
   borderRadius: "8px",
   maxWidth: "90%",
   maxHeight: "90%",
+};
+
+const closeButtonStyle = {
+  position: "absolute",
+  top: "10px",
+  right: "10px",
+  background: "transparent",
+  border: "none",
+  fontSize: "24px",
+  cursor: "pointer",
+  color: "white",
 };

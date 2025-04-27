@@ -19,6 +19,7 @@
   --red: #e44a40;
 
   --green-dark: #5e8848;
+  --green-middle: #b4c56f;
   --green-light: #f6f38c;
 
   /* transparent version */
@@ -220,34 +221,58 @@ h3 {
 
 .top3-box {
   flex: 1;
-  background: white;
+  background: var(--warm-white);
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.top3-list {
+.top3-box ul {
   list-style: none;
   padding: 0;
 }
 
-.top3-list li {
+.top3-box ul li {
   padding: 10px;
   margin: 5px 0;
-  border-radius: 5px;
+  border-radius: 20px;
   border-bottom: none;
 }
 
-.top3-list li:nth-child(1) {
-  background-color: var(--green-dark);
+.top3-box ul li:nth-child(1) {
+  background: linear-gradient(
+    to right,
+    var(--green-dark),
+    var(--green-middle),
+    transparent
+  );
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  text-shadow: -1px -1px 0 var(--blue-dark), 1px -1px 0 var(--blue-dark),
+    -1px 1px 0 var(--blue-dark), 1px 1px 0 var(--blue-dark);
 }
 
-.top3-list li:nth-child(2) {
-  background-color: #8bc34a;
+.top3-box ul li:nth-child(2) {
+  background: linear-gradient(
+    to right,
+    var(--green-middle),
+    var(--green-light),
+    transparent
+  );
+  text-shadow: -0.7px -0.7px 0 white, 0.7px -0.7px 0 white, -0.7px 0.7px 0 white,
+    0.7px 0.7px 0 white;
 }
 
-.top3-list li:nth-child(3) {
-  background-color: #cddc39;
+.top3-box ul li:nth-child(3) {
+  background: linear-gradient(
+    to right,
+    var(--green-light) 40%,
+    var(--warm-white),
+    transparent
+  );
+  text-shadow: -0.7px -0.7px 0 white, 0.7px -0.7px 0 white, -0.7px 0.7px 0 white,
+    0.7px 0.7px 0 white;
 }
 
 #progressTextMarkusAbborre,
@@ -380,19 +405,13 @@ a:hover {
   margin-left: 10px;
 }
 
-/* .catch-info {
+.catch-info {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: space-between;
-} */
-
-/* .catch-image-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-  width: fit-content;
-} */
+  align-items: center;
+  gap: 20px;
+}
 
 .delete-button {
   margin-right: 30px;
@@ -406,6 +425,12 @@ a:hover {
 }
 .delete-button:active {
   transform: scale(0.98);
+}
+
+.add-image-button,
+.show-image-button {
+  display: flex;
+  align-items: center;
 }
 
 @media screen and (max-width: 600px) {

@@ -1,5 +1,7 @@
 import { useState } from "react";
 import Modal from "./Modal";
+import addImage from "../assets/img/add_photo_alternate_24dp.svg";
+import showImage from "../assets/img/imagesmode_24dp.svg";
 
 export default function MyCatchList({ catches, onDelete }) {
   const [selectedImage, setSelectedImage] = useState(null);
@@ -23,22 +25,26 @@ export default function MyCatchList({ catches, onDelete }) {
             {catches.map((catchItem) => (
               <li key={catchItem._id}>
                 <div className="catch-info">
-                  {catchItem.date} - {catchItem.fish} ({catchItem.length} cm)
                   {catchItem.image ? (
                     <>
                       <button
+                        className="show-image-button"
+                        title="Visa bild"
                         onClick={() =>
                           openImageModal(
                             `/public/uploads/images/${catchItem.image}`
                           )
                         }
                       >
-                        Visa bild
+                        <img src={showImage} alt="Visa bild" />
                       </button>
                     </>
                   ) : (
-                    <button>Lägg till bild</button>
+                    <button className="add-image-button" title="Lägg till bild">
+                      <img src={addImage} alt="Lägg till bild" />
+                    </button>
                   )}
+                  {catchItem.date} - {catchItem.fish} ({catchItem.length} cm)
                 </div>
 
                 <button
